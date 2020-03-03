@@ -1,0 +1,21 @@
+service: renapp-admin
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-2
+  memorySize: 128
+  stage: ${opt:stage, self:custom.defaultStage}
+  profile: ${self:custom.profiles.${self:provider.stage}}
+custom:
+  defaultStage: dev
+  profiles:
+    dev: default
+    prod: renapp-admin-prod
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
