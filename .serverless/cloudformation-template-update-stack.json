@@ -158,7 +158,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/renapp-admin/dev/1583241308695-2020-03-03T13:15:08.695Z/renapp-admin.zip"
+          "S3Key": "serverless/renapp-admin/dev/1583273030894-2020-03-03T22:03:50.894Z/renapp-admin.zip"
         },
         "FunctionName": "renapp-admin-dev-app",
         "Handler": "dist/index.handler",
@@ -187,14 +187,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "AppLambdaVersionEMpdj2zex2N0RZasoif4hcBUY07L4VhSM20sKUoHg4": {
+    "AppLambdaVersionpSyymIP3AxMdY7L1yvJ6zfv5Kt5U8I2cIzywTtwNGo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "gMpxu4omSlDNqHi3qSEg7ktm0kBWW2BlhCAB2NdrRDY="
+        "CodeSha256": "4N5XsqwCZMC7ebynNEsKleWiSDL59MUhjw79aqik71Q="
       }
     },
     "ApiGatewayRestApi": {
@@ -303,7 +303,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1583241265132": {
+    "ApiGatewayDeployment1583272998859": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -363,7 +363,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionEMpdj2zex2N0RZasoif4hcBUY07L4VhSM20sKUoHg4"
+        "Ref": "AppLambdaVersionpSyymIP3AxMdY7L1yvJ6zfv5Kt5U8I2cIzywTtwNGo"
       }
     },
     "ServiceEndpoint": {
