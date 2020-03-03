@@ -1,2 +1,5 @@
 /myapp.zip
 /node_modules/
+/.env
+/.serverless/renapp-admin.zip
+/dist/

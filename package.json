@@ -4,13 +4,37 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "node index.js"
+    "build": "tsc",
+    "run": "node dist/index.js",
+    "start": "tsc && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "serverless-http": "^2.3.2"
+    "serverless-http": "^2.3.2",
+    "@types/express": "^4.17.1",
+    "aws-sdk": "^2.608.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "currency-formatter": "^1.5.5",
+    "dotenv": "^8.2.0",
+    "handlebars": "^4.7.3",
+    "html-pdf": "2.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.1",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
+    "mysql2": "^2.0.0",
+    "number-in-letters": "^0.5.0",
+    "objection": "^2.1.2",
+    "objection-softdelete": "^2.0.1",
+    "written-number": "^0.9.1"
+  },
+  "devDependencies": {
+    "@types/moment-timezone": "^0.5.12",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.5"
   }
 }

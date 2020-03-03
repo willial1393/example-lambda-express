@@ -9,13 +9,26 @@ provider:
 custom:
   defaultStage: dev
   profiles:
-    dev: default
-    prod: renapp-admin-prod
+    dev: renapp-admin
+    prod: renapp-admin
 functions:
   app:
-    handler: index.handler
+    handler: dist/index.handler
     events:
       - http:
           path: /
           method: ANY
           cors: true
+    vpc:
+      securityGroupIds:
+        - sg-07a4c1dcf87ef7398
+      subnetIds:
+        - subnet-bfea26f2
+        - subnet-6adfa803
+        - subnet-e1962a9a
+package:
+  exclude:
+    - src/**
+    - .env
+  include:
+    - dist/**

@@ -134,7 +134,21 @@
               "lambdaRole"
             ]
           ]
-        }
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+              ]
+            ]
+          }
+        ]
       }
     },
     "AppLambdaFunction": {
@@ -144,10 +158,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/renapp-admin/dev/1583200086205-2020-03-03T01:48:06.205Z/renapp-admin.zip"
+          "S3Key": "serverless/renapp-admin/dev/1583207280595-2020-03-03T03:48:00.595Z/renapp-admin.zip"
         },
         "FunctionName": "renapp-admin-dev-app",
-        "Handler": "index.handler",
+        "Handler": "dist/index.handler",
         "MemorySize": 128,
         "Role": {
           "Fn::GetAtt": [
@@ -156,21 +170,31 @@
           ]
         },
         "Runtime": "nodejs12.x",
-        "Timeout": 6
+        "Timeout": 6,
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-07a4c1dcf87ef7398"
+          ],
+          "SubnetIds": [
+            "subnet-bfea26f2",
+            "subnet-6adfa803",
+            "subnet-e1962a9a"
+          ]
+        }
       },
       "DependsOn": [
         "AppLogGroup",
         "IamRoleLambdaExecution"
       ]
     },
-    "AppLambdaVersioncC7jntiqUjFkgd8JMIGODZ6rgODb4oLCiXY0jX6W9M": {
+    "AppLambdaVersionZL6relAAVpFve9ZWK9n3I5gSBJyra45LVjQxwvlk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "xebVpRDpNLGYEPii079wQwoQednfzAQL6UdRDk8SoUw="
+        "CodeSha256": "LpEN9hKTfT9LtU3d4S5GvD37muUrCtGPqRhPP8BP+EQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -279,7 +303,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1583200082854": {
+    "ApiGatewayDeployment1583207265390": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -339,7 +363,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersioncC7jntiqUjFkgd8JMIGODZ6rgODb4oLCiXY0jX6W9M"
+        "Ref": "AppLambdaVersionZL6relAAVpFve9ZWK9n3I5gSBJyra45LVjQxwvlk"
       }
     },
     "ServiceEndpoint": {

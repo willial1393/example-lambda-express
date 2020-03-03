@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Student's profile</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <style>
+        .watermark {
+            background-image: url("{{watermark}}");
+            background-repeat: repeat-y;
+        }
+
+        hr {
+            border-top: 1px solid black !important;
+        }
+
+        .header::after {
+        }
+
+        .footer {
+            padding-left: 50%;
+            font-size: small;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th {
+            text-decoration: underline;
+        }
+
+        tr {
+            page-break-after: always;
+        }
+
+        .margin-page {
+            margin: 8rem 5rem 5rem 8rem;
+        }
+
+        .new-page {
+            page-break-before: always;
+        }
+
+    </style>
+<body class="watermark">
+<div id="pageHeader-first"></div>
+<div id="pageHeader-2"></div>
+<div id="pageHeader">
+    <table class="text-left margin-page" style="margin-top: 0; width: 900px;">
+        <thead>
+        <tr>
+            <td colspan="5">
+                <p style="padding-top: 4rem;">
+                    Descripción de los servicios legales prestados a {{customername}}, de {{minDate}} hasta {{maxDate}}
+                </p>
+                <hr style="margin: 0; padding: 0">
+            </td>
+        </tr>
+        <tr style="text-align: center">
+            <th style="width: 6rem">Fecha</th>
+            <th style="width: 4rem">Tiempo</th>
+            <th style="width: 9rem">Valor</th>
+            <th style="width: 20rem">Actividad</th>
+            <th>Profesional</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="pageHeader-last">
+    <table class="text-left margin-page" style="margin-top: 0; width: 900px;">
+        <thead>
+        <tr>
+            <td colspan="5">
+                <p style="padding-top: 4rem;">
+                    Descripción de los servicios legales prestados a {{customername}}, de {{minDate}} hasta {{maxDate}}
+                </p>
+                <hr style="margin: 0; padding: 0">
+            </td>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div class="margin-page">
+    <p>Bogotá D.C., {{dateinit}}</p><br>
+    <div class="text-center">
+        <p>{{customername}}</p>
+        <p>{{customerident}}</p>
+        <p>Debe a:</p>
+        <p>ESTUDIOS PALACIOS LLERAS S.A.S.</p>
+    </div>
+    <br>
+    <p>Por servicios legales prestados según relación descrita:</p>
+    <table>
+        <tr>
+            <td style="width: 5rem">Fecha de Actividades:</td>
+            <td style="padding-left: 2rem">{{minDate}} hasta {{maxDate}}</td>
+        </tr>
+        <tr>
+            <td>Asunto:</td>
+            <td style="font-weight: bold; padding-left: 2rem;text-align: left">{{subject}}</td>
+        </tr>
+    </table>
+    <hr>
+    <table style="width: 50%">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Tiempo (Horas)</th>
+            <th style="text-align: center">Valor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>SUBTOTAL:</td>
+            <td>{{subtotalHours}}</td>
+            <td style="text-align: right">{{subtotalValue}}</td>
+        </tr>
+        <tr>
+            <td>IVA:</td>
+            <td>{{ivapercent}}%</td>
+            <td style="text-align: right">{{ivaValue}}</td>
+        </tr>
+        <tr>
+            <td>TOTAL:</td>
+            <td></td>
+            <td style="text-align: right">{{total}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <p>SON: {{totalWords}}</p>
+    <div class="text-center">
+        <p>Atentamente,</p>
+        <br><br>
+        <p>{{associated}}</p>
+        <p>ESTUDIOS PALACIOS LLERAS S.A.S.</p>
+    </div>
+    <div class="new-page"></div>
+    <p>Bogotá D.C., {{dateinit}}</p><br>
+    <table>
+        <tr>
+            <td style="width: 5rem">Asunto:</td>
+            <td style="font-weight: bold; text-align: left">{{subject}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td colspan="5">
+                <p>
+                    Descripción de los servicios legales prestados a {{customername}}, de {{minDate}} hasta {{maxDate}}
+                </p>
+                <hr>
+            </td>
+        </tr>
+        <tr style="text-align: center">
+            <th style="width: 6rem">Fecha</th>
+            <th style="width: 4rem">Tiempo</th>
+            <th style="width: 9rem">Valor</th>
+            <th style="width: 20rem">Actividad</th>
+            <th>Profesional</th>
+        </tr>
+        {{#each invoiceconcepts}}
+        <tr style="vertical-align: top;">
+            <td style="text-align: center">{{this.datestart}}</td>
+            <td style="text-align: center">{{this.duration}}</td>
+            <td style="text-align: right; padding-right: 2rem">{{this.value}}</td>
+            <td>
+                <div>{{this.name}}</div>
+                <div style="font-style: italic">{{{this.description}}}</div>
+            </td>
+            <td style="text-align: center">{{this.lawyer}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    <hr>
+    <table style="width: 50%">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Tiempo (Horas)</th>
+            <th style="text-align: center">Valor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>SUBTOTAL:</td>
+            <td>{{subtotalHours}}</td>
+            <td style="text-align: right">{{subtotalValue}}</td>
+        </tr>
+        <tr>
+            <td>IVA:</td>
+            <td>{{ivapercent}}%</td>
+            <td style="text-align: right">{{ivaValue}}</td>
+        </tr>
+        <tr>
+            <td>TOTAL:</td>
+            <td></td>
+            <td style="text-align: right">{{total}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <p>SON: {{totalWords}}</p>
+</div>
+<div class="new-page"></div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
