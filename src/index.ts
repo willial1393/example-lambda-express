@@ -2,6 +2,7 @@ import * as Objection from "objection";
 import {UserRouter} from "./routers/userRouter";
 
 const express = require('express');
+const cors = require('cors');
 const serverless = require('serverless-http');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -23,6 +24,7 @@ Model.knex(knex);
 const app = express();
 const objectionSoftDelete = require('objection-softdelete');
 objectionSoftDelete.register(Objection, {deleteAttr: 'deleted'});
+app.use(cors());
 app.use(bodyParser.json({limit: '20mb', extended: true}));
 app.use((request, res, next) => {
     res.header('Content-Type', 'application/json');
@@ -34,7 +36,7 @@ app.use((request, res, next) => {
     next();
 });
 app.use(async (req, res, next) => {
-    console.log('http://localhost:' + process.env.PORT + req.originalUrl);
+    console.log(process.env.PORT + req.originalUrl);
     if (req.method === 'OPTIONS'
         || req.originalUrl === '/'
         || req.originalUrl === '/user/login'
@@ -54,7 +56,8 @@ app.get('/', function (req, res) {
     res.send('Success!!! Renapp-admin API');
 });
 app.use('/user', UserRouter.get());
-app.listen(process.env.PORT, function () {
-    console.log('listen on http://localhost:' + process.env.PORT);
-});
-module.exports.handler = serverless(app);
+
+const server = serverless(app);
+module.exports.handler = async (event, context) => {
+    return await server(event, context);
+};

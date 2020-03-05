@@ -174,7 +174,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/renapp-admin/dev/1583241308695-2020-03-03T13:15:08.695Z/renapp-admin.zip"
+                "S3Key": "serverless/renapp-admin/dev/1583447138100-2020-03-05T22:25:38.100Z/renapp-admin.zip"
               },
               "FunctionName": "renapp-admin-dev-app",
               "Handler": "dist/index.handler",
@@ -203,14 +203,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "AppLambdaVersionEMpdj2zex2N0RZasoif4hcBUY07L4VhSM20sKUoHg4": {
+          "AppLambdaVersione0erKIjGgiuOXlk9YVeJQDNqV3tyemuMlgj62iqoXM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "gMpxu4omSlDNqHi3qSEg7ktm0kBWW2BlhCAB2NdrRDY="
+              "CodeSha256": "8aGqpVNIiqlPRhXbWxNU0tx7l/5C/pOPMqgp8PSEDP0="
             }
           },
           "ApiGatewayRestApi": {
@@ -225,49 +225,16 @@
               "Policy": ""
             }
           },
-          "ApiGatewayMethodOptions": {
-            "Type": "AWS::ApiGateway::Method",
+          "ApiGatewayResourceProxyVar": {
+            "Type": "AWS::ApiGateway::Resource",
             "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
+              "ParentId": {
                 "Fn::GetAtt": [
                   "ApiGatewayRestApi",
                   "RootResourceId"
                 ]
               },
+              "PathPart": "{proxy+}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -319,7 +286,50 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1583241265132": {
+          "ApiGatewayMethodProxyVarAny": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "ANY",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceProxyVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "AppLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayDeployment1583447114399": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -328,8 +338,8 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodOptions",
-              "ApiGatewayMethodAny"
+              "ApiGatewayMethodAny",
+              "ApiGatewayMethodProxyVarAny"
             ]
           },
           "AppLambdaPermissionApiGateway": {
@@ -379,7 +389,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionEMpdj2zex2N0RZasoif4hcBUY07L4VhSM20sKUoHg4"
+              "Ref": "AppLambdaVersione0erKIjGgiuOXlk9YVeJQDNqV3tyemuMlgj62iqoXM"
             }
           },
           "ServiceEndpoint": {
@@ -483,36 +493,19 @@
         "prod": "renapp-admin"
       }
     },
+    "plugins": [
+      "serverless-offline"
+    ],
     "pluginsData": {},
     "functions": {
       "app": {
         "handler": "dist/index.handler",
         "events": [
           {
-            "http": {
-              "path": "",
-              "method": "any",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "ANY"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS_PROXY"
-            }
+            "http": "ANY /"
+          },
+          {
+            "http": "ANY {proxy+}"
           }
         ],
         "vpc": {
@@ -528,7 +521,7 @@
         "memory": 128,
         "timeout": 6,
         "runtime": "nodejs12.x",
-        "versionLogicalId": "AppLambdaVersionEMpdj2zex2N0RZasoif4hcBUY07L4VhSM20sKUoHg4"
+        "versionLogicalId": "AppLambdaVersione0erKIjGgiuOXlk9YVeJQDNqV3tyemuMlgj62iqoXM"
       }
     },
     "serviceFilename": "serverless.yml",
@@ -537,7 +530,7 @@
     "artifact": "/Applications/XAMPP/xamppfiles/htdocs/example-lambda-express/.serverless/renapp-admin.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/renapp-admin/dev/1583241308695-2020-03-03T13:15:08.695Z",
+    "artifactDirectoryName": "serverless/renapp-admin/dev/1583447138100-2020-03-05T22:25:38.100Z",
     "artifact": "renapp-admin.zip"
   }
 }

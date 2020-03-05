@@ -15,10 +15,8 @@ functions:
   app:
     handler: dist/index.handler
     events:
-      - http:
-          path: /
-          method: ANY
-          cors: true
+      - http: ANY /
+      - http: 'ANY {proxy+}'
     vpc:
       securityGroupIds:
         - sg-07a4c1dcf87ef7398
@@ -32,3 +30,5 @@ package:
     - .env
   include:
     - dist/**
+plugins:
+  - serverless-offline
