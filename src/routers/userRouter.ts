@@ -11,7 +11,25 @@ const passwordHash = require('password-hash');
 
 export class UserRouter {
     static get() {
+        router.get('/test', async function (req: Request, res: Response) {
+            sendSuccess(res, {respuesta: 'ok'});
+        });
         router.get('/', async function (req: Request, res: Response) {
+            console.log({
+                host: process.env.DB_HOST,
+                user: process.env.DB_USER,
+                port: process.env.DB_PORT,
+                password: process.env.DB_PASS,
+                database: process.env.DB_NAME
+            });
+            try {
+                await Users.query();
+            } catch (e) {
+                console.log(e);
+            }
+            console.log({
+                res: 'queryOK'
+            });
             try {
                 sendSuccess(res, await paginateQuery(Users, req));
             } catch (e) {

@@ -13,6 +13,7 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 export function sendError(res: Response, error: any) {
+    console.log(error);
     if (error instanceof Error) {
         error = error.message;
     }

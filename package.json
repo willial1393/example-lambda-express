@@ -16,7 +16,6 @@
     "@types/express": "^4.17.1",
     "aws-sdk": "^2.608.0",
     "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
     "currency-formatter": "^1.5.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -32,6 +31,7 @@
     "objection-softdelete": "^2.0.1",
     "password-hash": "^1.2.2",
     "serverless-http": "^2.3.2",
+    "serverless-mysql": "^1.5.3",
     "written-number": "^0.9.1"
   },
   "devDependencies": {

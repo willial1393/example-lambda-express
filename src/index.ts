@@ -2,7 +2,6 @@ import * as Objection from "objection";
 import {UserRouter} from "./routers/userRouter";
 
 const express = require('express');
-const cors = require('cors');
 const serverless = require('serverless-http');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -24,7 +23,6 @@ Model.knex(knex);
 const app = express();
 const objectionSoftDelete = require('objection-softdelete');
 objectionSoftDelete.register(Objection, {deleteAttr: 'deleted'});
-app.use(cors());
 app.use(bodyParser.json({limit: '20mb', extended: true}));
 app.use((request, res, next) => {
     res.header('Content-Type', 'application/json');
@@ -56,7 +54,18 @@ app.get('/', function (req, res) {
     res.send('Success!!! Renapp-admin API');
 });
 app.use('/user', UserRouter.get());
-
+const mysql = require('serverless-mysql')();
+mysql.config({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    port: process.env.DB_PORT,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
+});
+app.get('/sql', async function (req, res) {
+    await mysql.connect();
+    res.send('Success!!! Renapp-admin API mysql');
+});
 const server = serverless(app);
 module.exports.handler = async (event, context) => {
     return await server(event, context);
