@@ -31,7 +31,6 @@
     "objection-softdelete": "^2.0.1",
     "password-hash": "^1.2.2",
     "serverless-http": "^2.3.2",
-    "serverless-mysql": "^1.5.3",
     "written-number": "^0.9.1"
   },
   "devDependencies": {

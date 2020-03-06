@@ -34,7 +34,7 @@ app.use((request, res, next) => {
     next();
 });
 app.use(async (req, res, next) => {
-    console.log(process.env.PORT + req.originalUrl);
+    console.log('-> ' + req.originalUrl);
     if (req.method === 'OPTIONS'
         || req.originalUrl === '/'
         || req.originalUrl === '/user/login'
@@ -54,18 +54,6 @@ app.get('/', function (req, res) {
     res.send('Success!!! Renapp-admin API');
 });
 app.use('/user', UserRouter.get());
-const mysql = require('serverless-mysql')();
-mysql.config({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    port: process.env.DB_PORT,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
-});
-app.get('/sql', async function (req, res) {
-    await mysql.connect();
-    res.send('Success!!! Renapp-admin API mysql');
-});
 const server = serverless(app);
 module.exports.handler = async (event, context) => {
     return await server(event, context);

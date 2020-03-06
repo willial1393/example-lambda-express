@@ -16,58 +16,9 @@
         {
           "Effect": "Allow",
           "Action": [
-            "rds:*",
-            "cloudwatch:DescribeAlarms",
-            "cloudwatch:GetMetricStatistics",
-            "ec2:CreateNetworkInterface",
-            "ec2:DescribeNetworkInterfaces",
-            "ec2:DeleteNetworkInterface",
-            "ec2:DescribeAccountAttributes",
-            "ec2:DescribeAvailabilityZones",
-            "ec2:DescribeSecurityGroups",
-            "ec2:DescribeSubnets",
-            "ec2:DescribeVpcs",
-            "sns:ListSubscriptions",
-            "sns:ListTopics",
-            "logs:DescribeLogStreams",
-            "logs:GetLogEvents"
+            "rds:*"
           ],
           "Resource": "*"
-        },
-        {
-          "Effect": "Allow",
-          "Action": [
-            "s3:ListBucket"
-          ],
-          "Resource": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:aws:s3:::",
-                {
-                  "Ref": "ServerlessDeploymentBucket"
-                }
-              ]
-            ]
-          }
-        },
-        {
-          "Effect": "Allow",
-          "Action": [
-            "s3:PutObject"
-          ],
-          "Resource": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:aws:s3:::",
-                {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "/*"
-              ]
-            ]
-          }
         }
       ],
       "versionFunctions": true,
@@ -194,12 +145,6 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
-                      },
-                      {
-                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][1]"
-                      },
-                      {
-                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][2]"
                       }
                     ]
                   }
@@ -241,7 +186,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/renapp-admin/dev/1583460204101-2020-03-06T02:03:24.101Z/renapp-admin.zip"
+                "S3Key": "serverless/renapp-admin/dev/1583468455723-2020-03-06T04:20:55.723Z/renapp-admin.zip"
               },
               "FunctionName": "renapp-admin-dev-app",
               "Handler": "dist/index.handler",
@@ -270,14 +215,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "AppLambdaVersionVFMWStLGzdZaOLROOrlYwbM3DXuzxZneM8txJX8o8": {
+          "AppLambdaVersiontf3zsdHX9Eq2WpPnDae7INn3FIJWE9WdKcLD6DhRM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "HMnQGM5KYiM9ugJpZOhzd4lo9xm6SrzdAyv+3Ll6qFo="
+              "CodeSha256": "W1t0vFmqaoY5nm4pdk5gWBSi44eUegDzSzZyopb/zfA="
             }
           },
           "ApiGatewayRestApi": {
@@ -396,7 +341,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1583460187402": {
+          "ApiGatewayDeployment1583468436942": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -456,7 +401,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionVFMWStLGzdZaOLROOrlYwbM3DXuzxZneM8txJX8o8"
+              "Ref": "AppLambdaVersiontf3zsdHX9Eq2WpPnDae7INn3FIJWE9WdKcLD6DhRM"
             }
           },
           "ServiceEndpoint": {
@@ -588,7 +533,7 @@
         "memory": 512,
         "timeout": 6,
         "runtime": "nodejs12.x",
-        "versionLogicalId": "AppLambdaVersionVFMWStLGzdZaOLROOrlYwbM3DXuzxZneM8txJX8o8"
+        "versionLogicalId": "AppLambdaVersiontf3zsdHX9Eq2WpPnDae7INn3FIJWE9WdKcLD6DhRM"
       }
     },
     "serviceFilename": "serverless.yml",
@@ -597,7 +542,7 @@
     "artifact": "/Applications/XAMPP/xamppfiles/htdocs/example-lambda-express/.serverless/renapp-admin.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/renapp-admin/dev/1583460204101-2020-03-06T02:03:24.101Z",
+    "artifactDirectoryName": "serverless/renapp-admin/dev/1583468455723-2020-03-06T04:20:55.723Z",
     "artifact": "renapp-admin.zip"
   }
 }
