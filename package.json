@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.1",
-    "aws-sdk": "^2.608.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.19.0",
     "currency-formatter": "^1.5.5",
     "dotenv": "^8.2.0",
